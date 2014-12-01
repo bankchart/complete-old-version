@@ -1,6 +1,6 @@
 package com.xplink.android.carchecklist;
 
-import java.util.ArrayList;
+import java.util.ArrayList; 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -116,7 +116,7 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 	private final int EXTERIOR = 9;
 	private final int INTERIOR = 15;
 	private final int DOCUMENT = 9;
-	
+
 	private int powerWeight, engineWeight, exteriorWeight, interiorWeight,
 			documentWeight;
 	private static final int Integer = 0;
@@ -240,65 +240,71 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 					if (entry.getValue()) {
 						getTotalInterior(true);
 						numInteriorChecked++;
-						Log.i("checkbox", "numInteriorChecked : " + numInteriorChecked);
+						Log.i("checkbox", "numInteriorChecked : "
+								+ numInteriorChecked);
 					}
 				} else if ("power".equals(key)) {
 					if (entry.getValue()) {
 						getTotalPower(true);
 						numPowerChecked++;
-						Log.i("checkbox", "numPowerChecked : " + numPowerChecked);
+						Log.i("checkbox", "numPowerChecked : "
+								+ numPowerChecked);
 					}
 				} else if ("engine".equals(key)) {
 					if (entry.getValue()) {
 						getTotalEngine(true);
 						numEngineChecked++;
-						Log.i("checkbox", "numEngineChecked : " + numEngineChecked);
+						Log.i("checkbox", "numEngineChecked : "
+								+ numEngineChecked);
 					}
 				} else if ("outside".equals(key)) {
 					if (entry.getValue()) {
 						getTotalExterior(true);
 						numExteriorChecked++;
-						Log.i("checkbox", "numExteriorChecked : " + numExteriorChecked);
+						Log.i("checkbox", "numExteriorChecked : "
+								+ numExteriorChecked);
 					}
-				} else if("doc".equals(key)){
+				} else if ("doc".equals(key)) {
 					if (entry.getValue()) {
 						getTotalDocument(true);
 						numDocumentChecked++;
-						Log.i("checkbox", "numDocumentChecked : " + numDocumentChecked);
+						Log.i("checkbox", "numDocumentChecked : "
+								+ numDocumentChecked);
 					}
 				}
 				edit.putBoolean(entry.getKey(), entry.getValue());
 				// println(entry.getKey() + " : " + entry.getValue());
 			}
 			Checknum = countChecknum;
-			
+
 			edit.putInt("CheckPowerTotal", numPowerChecked);
 			edit.putInt("CheckEngineTotal", numEngineChecked);
 			edit.putInt("CheckExteriorTotal", numExteriorChecked);
 			edit.putInt("CheckInteriorTotal", numInteriorChecked);
 			edit.putInt("CheckDocumentTotal", numDocumentChecked);
-			
+
 			edit.commit();
-			
+
 			CheckPowerTotal = restoreShared.getInt("CheckPowerTotal", 0);
 			CheckEngineTotal = restoreShared.getInt("CheckEngineTotal", 0);
 			CheckExteriorTotal = restoreShared.getInt("CheckExteriorTotal", 0);
 			CheckInteriorTotal = restoreShared.getInt("CheckInteriorTotal", 0);
 			CheckDocumentTotal = restoreShared.getInt("CheckDocumentTotal", 0);
-			
-			Log.i("checklist", "in listValue - numPowerChecked : " + numPowerChecked);
+
+			Log.i("checklist", "in listValue - numPowerChecked : "
+					+ numPowerChecked);
 			Log.i("checklist", "numEngineChecked : " + numEngineChecked);
 			Log.i("checklist", "numExteriorChecked : " + numExteriorChecked);
 			Log.i("checklist", "numInteriorChecked : " + numInteriorChecked);
 			Log.i("checklist", "numDocumentChecked : " + numDocumentChecked);
-			
+
 			Log.i("checklist", "CheckPowerTotal : " + CheckPowerTotal);
 			Log.i("checklist", "CheckEngineTotal : " + CheckEngineTotal);
 			Log.i("checklist", "CheckExteriorTotal : " + CheckExteriorTotal);
 			Log.i("checklist", "CheckInteriorTotal : " + CheckInteriorTotal);
 			Log.i("checklist", "CheckDocumentTotal : " + CheckDocumentTotal);
-			
-			//edit.commit();
+
+			// edit.commit();
 			for (Map.Entry<String, Integer> entry : mapSetting.entrySet()) {
 
 				if ("interior".equals(entry.getKey())) {
@@ -323,6 +329,14 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 			 * percenpower, percenengine, percenexterior, perceninterior,
 			 * percendocument, Ratiotext;
 			 */
+			//seekbar.putInt("Documentbar", documentseekbarValue);
+			powerseekbarValue = restoreShared.getInt("Powerbar", 0);
+			engineseekbarValue = restoreShared.getInt("Enginebar", 0);
+			interiorseekbarValue = restoreShared.getInt("Interiorbar", 0);
+			exteriorseekbarValue = restoreShared.getInt("Exteriorbar", 0);
+			documentseekbarValue = restoreShared.getInt("Documentbar", 0);
+			
+			Priority();
 		}
 		// ************************************************************************************
 		// isSaveCheckBox();
@@ -631,8 +645,8 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 		LinearLayout layout = (LinearLayout) findViewById(R.id.admob);
 		adView = new AdView(getApplicationContext());
 		adView.setAdSize(AdSize.LEADERBOARD);
-		 adView.setAdUnitId(admonId);
-		//adView.setAdUnitId("C17E5F3A146EC7E805175C72634D8098");
+		adView.setAdUnitId(admonId);
+		// adView.setAdUnitId("C17E5F3A146EC7E805175C72634D8098");
 		// Add the adView to it
 		layout.addView(adView);
 		// Initiate a generic request to load it with an ad
@@ -645,6 +659,7 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 				Context.MODE_PRIVATE);
 		// Log.i("checksum",
 		// "before call CheckRatio : " + shared.getInt("checknum", 0));
+		
 		CheckRatio();
 		// Log.i("checklist", "checking percenpower : " +
 		// shared.getInt("PercenPower", -1));
@@ -676,49 +691,51 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 			int id = -1;
 			String username = "empty";
 			String data = "empty";
+			if (cursor.getCount() > 0) {
+				while (cursor != null) {
+					idList[i] = cursor.getString(0);
+					i++;
+					if (cursor.isLast())
+						break;
+					cursor.moveToNext();
+				}
 
-			while (cursor != null) {
-				idList[i] = cursor.getString(0);
-				i++;
-				if (cursor.isLast())
-					break;
-				cursor.moveToNext();
+				// restore from save list
+				String iD = idList[indexList];
+				sqlList = "SELECT * FROM " + dbList.TABLE_NAME + " WHERE id="
+						+ iD;
+
+				Cursor cursor2 = sqliteList.rawQuery(sqlList, null);
+				cursor2.moveToFirst();
+				ExpandData ex = new ExpandData(getApplicationContext());
+				tmpList = ex.filterData(cursor2.getString(2));
+				ex.displayMap(tmpList.get(0), tmpList.get(1));
+				check = " , data : " + cursor2.getString(2);
+
+				cursor2.close();
+				sqliteList.close();
+				dbList.close();
+
+				int[] expand = ex.getPercentAllList();
+				// IT'S WORK FOR TEST
+				// ****************************************************************
+				PercenPower = expand[0];
+				PercenEngine = expand[1];
+				PercenExterior = expand[2];
+				PercenInterior = expand[3];
+				PercenDocument = expand[4];
+
+				/*
+				 * CheckPowerTotal = shared.getInt("CheckPowerTotal", 0);
+				 * CheckEngineTotal = shared.getInt("CheckEngineTotal", 0);
+				 * CheckExteriorTotal = shared.getInt("CheckExteriorTotal", 0);
+				 * CheckInteriorTotal = shared.getInt("CheckInteriorTotal", 0);
+				 * CheckDocumentTotal = shared.getInt("CheckDocumentTotal", 0);
+				 */
+
+				// IT'S WORK FOR TEST
+				// ****************************************************************
 			}
-
-			// restore from save list
-			String iD = idList[indexList];
-			sqlList = "SELECT * FROM " + dbList.TABLE_NAME + " WHERE id=" + iD;
-
-			Cursor cursor2 = sqliteList.rawQuery(sqlList, null);
-			cursor2.moveToFirst();
-			ExpandData ex = new ExpandData(getApplicationContext());
-			tmpList = ex.filterData(cursor2.getString(2));
-			ex.displayMap(tmpList.get(0), tmpList.get(1));
-			check = " , data : " + cursor2.getString(2);
-
-			cursor2.close();
-			sqliteList.close();
-			dbList.close();
-
-			int[] expand = ex.getPercentAllList();
-			// IT'S WORK FOR TEST
-			// ****************************************************************
-			PercenPower = expand[0];
-			PercenEngine = expand[1];
-			PercenExterior = expand[2];
-			PercenInterior = expand[3];
-			PercenDocument = expand[4];	
-			
-			/*CheckPowerTotal = shared.getInt("CheckPowerTotal", 0);
-			CheckEngineTotal = shared.getInt("CheckEngineTotal", 0);
-			CheckExteriorTotal = shared.getInt("CheckExteriorTotal", 0);
-			CheckInteriorTotal = shared.getInt("CheckInteriorTotal", 0);
-			CheckDocumentTotal = shared.getInt("CheckDocumentTotal", 0);*/
-			
-			
-			
-			// IT'S WORK FOR TEST
-			// ****************************************************************
 		} else {
 			Log.i("inCheck_satetGetList", "out stateGetList");
 		}
@@ -3379,8 +3396,10 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 										getIntent().removeExtra("exterior");
 										getIntent().removeExtra("interior");
 										getIntent().removeExtra("document");
-										//startActivity(intent);
-										Intent ii = new Intent(getApplicationContext(), CarCheckListActivity.class);
+										// startActivity(intent);
+										Intent ii = new Intent(
+												getApplicationContext(),
+												CarCheckListActivity.class);
 										startActivity(ii);
 										finish();
 
@@ -3457,6 +3476,8 @@ public class CarCheckListActivity extends Activity implements AnimationListener 
 				interiorWeight = shared.getInt("Interiorbar", 0);
 				documentWeight = shared.getInt("Documentbar", 0);
 
+				
+				
 				String display = "before record activity >> " + powerWeight
 						+ "|" + engineWeight + "|" + exteriorWeight + "|"
 						+ interiorWeight + "|" + documentWeight;

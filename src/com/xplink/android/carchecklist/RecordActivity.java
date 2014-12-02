@@ -71,8 +71,8 @@ public class RecordActivity extends Activity {
 		final AlertDialog.Builder subAdb = new AlertDialog.Builder(this);
 		adb.setTitle("Confirm dialog");
 		adb.setMessage("Do you save your name ?");
-		adb.setNegativeButton("Cancel", null);
-		adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+		adb.setPositiveButton("Cancel", null);
+		adb.setNegativeButton("Ok", new AlertDialog.OnClickListener() {
 			public void onClick(DialogInterface dialog, int arg1) {
 				SharedPreferences shared = getSharedPreferences("mysettings",
 						Context.MODE_PRIVATE);
